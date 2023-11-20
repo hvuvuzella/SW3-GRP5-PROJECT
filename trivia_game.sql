@@ -7,8 +7,7 @@ USE trivia_game;
 -- create normalized tables:
 CREATE TABLE players (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(40) NOT NULL,
-    password VARCHAR(40) NOT NULL
+    username VARCHAR(40) NOT NULL
 );
 
 -- every time API is called, 15 new questions are added, and they will have ID number from 1 - infinity (NOT 1 - 15 every time)
@@ -16,23 +15,21 @@ CREATE TABLE questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     difficulty_level VARCHAR(10) NOT NULL,
     question_text VARCHAR(300) NOT NULL,
-    answers VARCHAR(100) NOT NULL,
-    is_correct BOOLEAN NOT NULL
+    correct_answer VARCHAR(100) NOT NULL,
+    incorrect_answer_1 VARCHAR(100) NOT NULL,
+    incorrect_answer_2 VARCHAR(100) NOT NULL,
+    incorrect_answer_3 VARCHAR(100) NOT NULL
 );
 
 -- for the games table, there will be 15 rows of data per game, corresponding to 15 answers from player:
--- OR return to privious version where questions game and answers were 
--- in separate normalized tables in accordance with Kennys' advice and comments
-
 CREATE TABLE games (
     id INT AUTO_INCREMENT PRIMARY KEY,
     player_id INT,
     question_id INT,
     player_answer VARCHAR(100), -- store the user's answer
-    correct_answer VARCHAR(100),
     is_correct BOOLEAN, -- check if answer is correct
     FOREIGN KEY (player_id) REFERENCES players(id),
-    FOREIGN KEY (question_id) REFERENCES questions(id),
+    FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
 -- there will be one row of data added to the scoreboard table after every 1 game played
