@@ -23,6 +23,7 @@ def add_player():
     player_id = user.get_or_create()
     return jsonify({"id": player_id})
 
+
 @app.route("/add_new_questions/<game_id>/<player_id>", methods=["POST"])
 def add_questions(game_id, player_id):
     questions = request.get_json()["results"]

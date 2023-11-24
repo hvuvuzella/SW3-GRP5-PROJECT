@@ -21,7 +21,6 @@ def _connect_to_db(db_name):
 # Function which checks whether username exists and returns player_id,
 # and if username does not exist, new username is added to players and returns new player_id:
 def get_or_add_player_id(username):
-
     player_id = None
 
     try:
@@ -121,7 +120,7 @@ def add_new_game(player_id):
 
 # DB function to add questions data to questions table in DB - will be used for API call
 def add_new_question(game_id, player_id, difficulty_level, question_text, correct_answer, incorrect_answer_1,
-                      incorrect_answer_2, incorrect_answer_3):
+                     incorrect_answer_2, incorrect_answer_3):
     try:
         # Establish a connection to the MySQL database
         db_name = "trivia_game"
@@ -556,16 +555,16 @@ def main():
     # Run relevant functions below to ensure connecting to DB is successful:
 
     # Check if username exists, if exists, return player_id, if not, add new player and then return new player_id:
-    get_or_add_player_id("helenvu") # username exists
-    get_or_add_player_id("marshmallow_squisher") # username does not exist
+    get_or_add_player_id("helenvu")  # username exists
+    get_or_add_player_id("marshmallow_squisher")  # username does not exist
 
     # Add a new game to DB when player starts game:
     add_new_game(2)
 
     # Add a new question to questions table including game_id and player_id as well:
     add_new_question(2, 2, "easy", "What is the capital of France?",
-                      "Paris", "Berlin", "London",
-                      "Madrid")
+                     "Paris", "Berlin", "London",
+                     "Madrid")
 
     # Load questions into game_questions table at start of game, with player answer and is_correct set to None
     # p.s. None in Python is equal to NULL in mySQL
