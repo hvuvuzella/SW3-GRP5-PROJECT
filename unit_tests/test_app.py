@@ -61,6 +61,13 @@ class TestAppRoutes(unittest.TestCase):
         else:
             self.assertEqual(response.status_code, 404)
 
+    def test_leaderboard_route(self):
+        # Sending a GET request to the /leaderboard/ route
+        response = self.app.get('/leaderboard/')
+
+        # Check the response
+        self.assertEqual(response.status_code, 200)
+
 
 if __name__ == '__main__':
     unittest.main()
