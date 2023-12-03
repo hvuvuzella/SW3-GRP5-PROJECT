@@ -446,6 +446,37 @@ class TestGetLeaderboard(unittest.TestCase):
         mock_cursor.close.assert_called_once()
         mock_connection.close.assert_called_once()
 
+    @patch('db_utils._connect_to_db')  # Mock the database connection
+    def test_more_than_10_scores(self, mock_connect):
+        # Mocking the database connection and cursor
+        mock_connection = MagicMock()
+        mock_connect.return_value = mock_connection
+        mock_cursor = MagicMock()
+        mock_connection.cursor.return_value = mock_cursor
+
+        # Mocking the execute method to avoid actual database operations
+        mock_cursor.execute.return_value = None
+
+        # Mocking the fetchall method with more than 10 scores
+        mock_cursor.fetchall.return_value = [
+            ('user1', 10), ('user2', 9), ('user3', 8), ('user4', 7), ('user5', 6), ('user6', 5),
+            ('user7', 4), ('user8', 3), ('user9', 2), ('user10', 1), ('user11', 0), ('user12', 0)
+        ]
+
+        # Call the function
+        result = get_leaderboard()
+
+        # Assertions
+        self.assertEqual(result, [('user1', 10), ('user2', 9), ('user3', 8), ('user4', 7), ('user5', 6),
+                                  ('user6', 5),('user7', 4), ('user8', 3), ('user9', 2), ('user10', 1)])
+
+        # Additional assertions
+        mock_connection.cursor.assert_called_once()
+        mock_cursor.execute.assert_called_once()
+        mock_cursor.fetchall.assert_called_once()
+        mock_cursor.close.assert_called_once()
+        mock_connection.close.assert_called_once()
+
 
 if __name__ == '__main__':
     unittest.main()
